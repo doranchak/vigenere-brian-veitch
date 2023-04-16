@@ -1,0 +1,117 @@
+body {
+
+
+}
+
+#container {
+	width:1000px;
+	margin:0px auto;
+}
+
+#ciphertext {
+	text-transform: uppercase;
+	width: 600px;
+}
+
+#ciphertextNoSpecialChars {
+	display:none;
+}
+#englishFrequency {
+	text-align: left;
+}
+
+#secondRow {
+	display:none;
+}
+
+#swapField {
+	width: 100px;
+}
+
+.bars {
+	vertical-align: bottom;
+}
+
+.bar {
+	background: purple;
+	margin:  0px auto;
+	width:30px; 
+	
+	
+	text-align: center;
+}
+
+.alphabet {
+	text-align: center;
+}
+
+.skip {
+	clear:both;
+	height:50px;
+}
+
+textarea {
+	width:400px;
+	height:200px;
+}
+
+tr.bars {
+	height: 100px;
+	font-size:12px;
+	text-align: center;
+}
+
+td {
+	width:40px;
+	text-align: center;
+}
+
+#table {
+	border:1px solid black;
+	max-height: 500px;
+	overflow: scroll;
+}
+
+#table th {
+	background-color: gray;
+}
+
+#regularEnglish, #cipherLanguage, #shift {
+	margin: 10px;
+	display:none;
+}
+
+
+#bottom {
+	height:5px;
+}
+
+
+#tableExplanation, #keysizeExplanation, #keywordLetters {
+	margin:10px;
+}
+
+.chooseLetter {
+	font-size:18px;
+	margin:5px;
+}
+/*
+     FILE ARCHIVED ON 18:36:28 Feb 10, 2022 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 14:27:01 Apr 16, 2023.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 83.634
+  exclusion.robots: 0.088
+  exclusion.robots.policy: 0.076
+  RedisCDXSource: 7.386
+  esindex: 0.008
+  LoadShardBlock: 59.161 (3)
+  PetaboxLoader3.datanode: 62.659 (4)
+  load_resource: 143.036
+  PetaboxLoader3.resolve: 89.969
+*/

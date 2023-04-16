@@ -1,0 +1,216 @@
+
+<!-- saved from url=(0120)https://web.archive.org/web/20220210183628/http://www.brianveitch.com/maze-runner/frequency-analysis-vigenere/index.html -->
+<html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><script src="./index_files/analytics.js" type="text/javascript"></script>
+<script type="text/javascript" src="./index_files/bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="./index_files/wombat.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="./index_files/banner-styles.css">
+<link rel="stylesheet" type="text/css" href="./index_files/iconochive.css">
+<!-- End Wayback Rewrite JS Include -->
+
+ <meta name="keywords" content="cryptography,codes,encryption,decryption,frequency analysis, vigenere">
+<title>Vigenere Cypher Decryption</title>
+<link rel="stylesheet" type="text/css" href="./index_files/test.css">
+<link rel="stylesheet" type="text/css" href="./index_files/style.css">
+<script type="text/javascript" src="./index_files/frequency.js"></script>
+<script type="text/javascript" src="./index_files/frequency_vigenere.js"></script>
+<!-- Add jQuery library -->
+    <script type="text/javascript" src="./index_files/jquery-latest.min.js"></script>
+
+    <!-- Add mousewheel plugin (this is optional) -->
+    <script type="text/javascript" src="./index_files/jquery.mousewheel-3.0.6.pack.js"></script>
+
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="./index_files/jquery.fancybox.css" type="text/css" media="screen">
+    <script type="text/javascript" src="./index_files/jquery.fancybox.pack.js"></script>
+
+    <!-- Optionally add helpers - button, thumbnail and/or media -->
+    <link rel="stylesheet" href="./index_files/jquery.fancybox-buttons.css" type="text/css" media="screen">
+    <script type="text/javascript" src="./index_files/jquery.fancybox-buttons.js"></script>
+    <script type="text/javascript" src="./index_files/jquery.fancybox-media.js"></script>
+
+    <link rel="stylesheet" href="./index_files/jquery.fancybox-thumbs.css" type="text/css" media="screen">
+    <script type="text/javascript" src="./index_files/jquery.fancybox-thumbs.js"></script>
+
+</head>
+
+
+<body>
+
+<div id="page">
+	<div id="contents">
+		<a class="fancybox-media" href="http://www.youtube.com/watch?v=P4z3jAOzT9I"><h3 class="instruction">How to use the Vigenere Cracking Tool.</h3></a>
+
+		Enter your Cipher Text
+<form>
+    <textarea id="ciphertext"></textarea>
+    <textarea id="ciphertextNoSpecialChars"></textarea>
+    
+    <input type="button" onclick="removeSpecialCharacters();" value="Calculate Frequency">
+</form>
+
+
+
+
+<div id="table">
+</div>
+
+<div id="tableExplanation">
+</div>
+
+<div id="keysizeExplanation">
+
+</div>
+
+<div id="keywordLetters">
+
+</div>
+
+
+<table id="regularEnglish" border="1" align="center" cellspacing="0">
+<tbody><tr class="bars">
+<td id="graph_0" class="bars"></td>
+<td id="graph_1" class="bars"></td>
+<td id="graph_2" class="bars"></td>
+<td id="graph_3" class="bars"></td>
+<td id="graph_4" class="bars"></td>
+<td id="graph_5" class="bars"></td>
+<td id="graph_6" class="bars"></td>
+<td id="graph_7" class="bars"></td>
+<td id="graph_8" class="bars"></td>
+<td id="graph_9" class="bars"></td>
+<td id="graph_10" class="bars"></td>
+<td id="graph_11" class="bars"></td>
+<td id="graph_12" class="bars"></td>
+<td id="graph_13" class="bars"></td>
+<td id="graph_14" class="bars"></td>
+<td id="graph_15" class="bars"></td>
+<td id="graph_16" class="bars"></td>
+<td id="graph_17" class="bars"></td>
+<td id="graph_18" class="bars"></td>
+<td id="graph_19" class="bars"></td>
+<td id="graph_20" class="bars"></td>
+<td id="graph_21" class="bars"></td>
+<td id="graph_22" class="bars"></td>
+<td id="graph_23" class="bars"></td>
+<td id="graph_24" class="bars"></td>
+<td id="graph_25" class="bars"></td>
+</tr>
+<tr>
+<td id="alpha_0" class="alphabet"></td>
+<td id="alpha_1" class="alphabet"></td>
+<td id="alpha_2" class="alphabet"></td>
+<td id="alpha_3" class="alphabet"></td>
+<td id="alpha_4" class="alphabet"></td>
+<td id="alpha_5" class="alphabet"></td>
+<td id="alpha_6" class="alphabet"></td>
+<td id="alpha_7" class="alphabet"></td>
+<td id="alpha_8" class="alphabet"></td>
+<td id="alpha_9" class="alphabet"></td>
+<td id="alpha_10" class="alphabet"></td>
+<td id="alpha_11" class="alphabet"></td>
+<td id="alpha_12" class="alphabet"></td>
+<td id="alpha_13" class="alphabet"></td>
+<td id="alpha_14" class="alphabet"></td>
+<td id="alpha_15" class="alphabet"></td>
+<td id="alpha_16" class="alphabet"></td>
+<td id="alpha_17" class="alphabet"></td>
+<td id="alpha_18" class="alphabet"></td>
+<td id="alpha_19" class="alphabet"></td>
+<td id="alpha_20" class="alphabet"></td>
+<td id="alpha_21" class="alphabet"></td>
+<td id="alpha_22" class="alphabet"></td>
+<td id="alpha_23" class="alphabet"></td>
+<td id="alpha_24" class="alphabet"></td>
+<td id="alpha_25" class="alphabet"></td>
+</tr>
+
+</tbody></table>
+
+
+
+<table id="cipherLanguage" border="1" align="center" cellspacing="0">
+<tbody><tr class="bars">
+<td id="freqGraph_0" class="bars"></td>
+<td id="freqGraph_1" class="bars"></td>
+<td id="freqGraph_2" class="bars"></td>
+<td id="freqGraph_3" class="bars"></td>
+<td id="freqGraph_4" class="bars"></td>
+<td id="freqGraph_5" class="bars"></td>
+<td id="freqGraph_6" class="bars"></td>
+<td id="freqGraph_7" class="bars"></td>
+<td id="freqGraph_8" class="bars"></td>
+<td id="freqGraph_9" class="bars"></td>
+<td id="freqGraph_10" class="bars"></td>
+<td id="freqGraph_11" class="bars"></td>
+<td id="freqGraph_12" class="bars"></td>
+<td id="freqGraph_13" class="bars"></td>
+<td id="freqGraph_14" class="bars"></td>
+<td id="freqGraph_15" class="bars"></td>
+<td id="freqGraph_16" class="bars"></td>
+<td id="freqGraph_17" class="bars"></td>
+<td id="freqGraph_18" class="bars"></td>
+<td id="freqGraph_19" class="bars"></td>
+<td id="freqGraph_20" class="bars"></td>
+<td id="freqGraph_21" class="bars"></td>
+<td id="freqGraph_22" class="bars"></td>
+<td id="freqGraph_23" class="bars"></td>
+<td id="freqGraph_24" class="bars"></td>
+<td id="freqGraph_25" class="bars"></td>
+</tr>
+<tr>
+<td id="freqAlpha_0" class="freqAlphabet"></td>
+<td id="freqAlpha_1" class="freqAlphabet"></td>
+<td id="freqAlpha_2" class="freqAlphabet"></td>
+<td id="freqAlpha_3" class="freqAlphabet"></td>
+<td id="freqAlpha_4" class="freqAlphabet"></td>
+<td id="freqAlpha_5" class="freqAlphabet"></td>
+<td id="freqAlpha_6" class="freqAlphabet"></td>
+<td id="freqAlpha_7" class="freqAlphabet"></td>
+<td id="freqAlpha_8" class="freqAlphabet"></td>
+<td id="freqAlpha_9" class="freqAlphabet"></td>
+<td id="freqAlpha_10" class="freqAlphabet"></td>
+<td id="freqAlpha_11" class="freqAlphabet"></td>
+<td id="freqAlpha_12" class="freqAlphabet"></td>
+<td id="freqAlpha_13" class="freqAlphabet"></td>
+<td id="freqAlpha_14" class="freqAlphabet"></td>
+<td id="freqAlpha_15" class="freqAlphabet"></td>
+<td id="freqAlpha_16" class="freqAlphabet"></td>
+<td id="freqAlpha_17" class="freqAlphabet"></td>
+<td id="freqAlpha_18" class="freqAlphabet"></td>
+<td id="freqAlpha_19" class="freqAlphabet"></td>
+<td id="freqAlpha_20" class="freqAlphabet"></td>
+<td id="freqAlpha_21" class="freqAlphabet"></td>
+<td id="freqAlpha_22" class="freqAlphabet"></td>
+<td id="freqAlpha_23" class="freqAlphabet"></td>
+<td id="freqAlpha_24" class="freqAlphabet"></td>
+<td id="freqAlpha_25" class="freqAlphabet"></td>
+</tr>
+</tbody></table>
+
+<div id="shift">
+    <button onclick="shift(-1);">Shift Left</button>
+    <button onclick="shift(1);">Shift Right</button>
+</div>
+
+<div id="bottom">
+</div>
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.fancybox-media').fancybox({
+        openEffect  : 'none',
+        closeEffect : 'none',
+        helpers : {
+            media : {}
+        }
+    });
+});
+</script>
+
+
+
+</body></html>

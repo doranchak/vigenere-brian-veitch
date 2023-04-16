@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<!-- saved from url=(0101)https://web.archive.org/web/20200214114413/http://www.brianveitch.com/maze-runner/vigenere/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="./index_files/bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="./index_files/wombat.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="./index_files/banner-styles.css">
+<link rel="stylesheet" type="text/css" href="./index_files/iconochive.css">
+<!-- End Wayback Rewrite JS Include -->
+
+	
+	<title>Vigenere</title>
+ <meta name="keywords" content="cryptography,codes,encryption,decryption,vigenere">
+	<!-- <link rel="stylesheet" href="./index_files/style.css" type="text/css"> -->
+	<script src="./index_files/jquery-latest.js"></script>
+	<script type="text/javascript">
+    function CustomAlert() {
+        this.render = function (dialog){
+            var winW = window.innerWidth;
+            var winH = window.innerHeight;
+            var dialogoverlay = document.getElementById('dialogoverlay');
+            var dialogbox = document.getElementById('dialogbox'); 
+            dialogoverlay.style.display = "block";
+            dialogoverlay.style.height = winH+"px";
+            dialogbox.style.left = (winW/2) - (550*.5) + "px";
+            dialogbox.style.top = "100px";
+            dialogbox.style.height = (winH-100)+"px";
+            dialogbox.style.display = "block";
+            document.getElementById('dialogboxhead').innerHTML = "LOOK HERE!";
+            document.getElementById('dialogboxbody').innerHTML = dialog;
+            document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Alert.ok()">OK</button>';
+        }
+
+        this.autodecrypt = function (ciphertext) {
+
+        }
+
+        this.ok = function(){
+            document.getElementById('dialogbox').style.display = "none";
+            document.getElementById('dialogoverlay').style.display = "none";
+        }
+
+    }
+    var Alert = new CustomAlert();
+</script>
+	<!-- Add jQuery library -->
+	<script type="text/javascript" src="./index_files/jquery-latest.min.js"></script>
+
+	<!-- Add mousewheel plugin (this is optional) -->
+	<!-- <script type="text/javascript" src="./index_files/jquery.mousewheel-3.0.6.pack.js"></script> -->
+
+	<!-- Add fancyBox -->
+	<!-- <link rel="stylesheet" href="./index_files/jquery.fancybox.css" type="text/css" media="screen"> -->
+	<!-- <script type="text/javascript" src="./index_files/jquery.fancybox.pack.js"></script> -->
+
+	<!-- Optionally add helpers - button, thumbnail and/or media -->
+	<!-- <link rel="stylesheet" href="./index_files/jquery.fancybox-buttons.css" type="text/css" media="screen"> -->
+	<!-- <script type="text/javascript" src="./index_files/jquery.fancybox-buttons.js"></script>
+	<script type="text/javascript" src="./index_files/jquery.fancybox-media.js"></script> -->
+
+	<!-- <link rel="stylesheet" href="./index_files/jquery.fancybox-thumbs.css" type="text/css" media="screen"> -->
+	<!-- <script type="text/javascript" src="./index_files/jquery.fancybox-thumbs.js"></script> -->
+
+	<style type="text/css">
+		#plaintext, #cipher, #encrypted, #keyword, #key, #keywordPractice {
+			text-transform: uppercase;
+		}
+
+		#dialogoverlay {
+		    display:none;
+		    opacity: .8;
+		    position:fixed;
+		    top:0px;
+		    left:0px;
+		    background: #fff;
+		    width:100%;
+		    z-index:10;
+		}
+
+		#dialogbox {
+		    display:none;
+		    position: fixed;
+		    background: #000;
+		    border-radius: 7px;
+		    width:550px;
+		    height:550;
+		    overflow: scroll;
+		    z-index: 10;
+		}
+
+		#dialogbox > div {background: #fff; margin:8px;}
+		#dialogbox > div > #dialogboxhead {background: #666; font-size: 19px; padding: 10px; color: #ccc;}
+		#dialogbox > div > #dialogboxbody {background: #333; padding: 20px; color: #fff;}
+		#dialogbox > div > #dialogboxfoot {background: #666; padding: 10px; text-align:right;}
+
+	</style>	
+</head>
+<body>
+<div id="dialogoverlay"></div>
+<div id="dialogbox">
+    <div>
+        <div id="dialogboxhead"></div>
+        <div id="dialogboxbody"></div>
+        <div id="dialogboxfoot"></div>
+    </div>
+</div>
+
+<div id="page">
+		
+		<div id="contents">
+			<a class="fancybox-media" href="http://www.youtube.com/watch?v=zNO4PTlg62k"><h3 class="instruction">Watch this video to show you how to use this page.</h3></a>
+
+			
+		Example: 	
+				
+				
+					<form id="alphabet" align="center">
+						<input type="text" id="_a" value="A">
+						<input type="text" id="_b" value="T">
+						<input type="text" id="_c" value="T">
+						<input type="text" id="_d" value="A">
+						<input type="text" id="_e" value="C">
+						<input type="text" id="_f" value="K">
+						<input type="text" id="_g" value=" ">
+						<input type="text" id="_h" value="A">
+						<input type="text" id="_i" value="T">
+						<input type="text" id="_j" value=" ">
+						<input type="text" id="_k" value="D">
+						<input type="text" id="_l" value="A">
+						<input type="text" id="_m" value="W">
+						<input type="text" id="_n" value="N">
+						<input type="text" id="_o" value=" ">
+						<input type="text" id="_p" value="V">
+						<input type="text" id="_q" value="I">
+						<input type="text" id="_r" value="C">
+						<input type="text" id="_s" value="T">
+						<input type="text" id="_t" value="O">
+						<input type="text" id="_u" value="R">
+						<input type="text" id="_v" value="Y">
+						<input type="text" id="_w" value="">
+						<input type="text" id="_x" value="">
+						<input type="text" id="_y" value="">
+					</form>
+						<br>
+
+					<form id="alphabet" align="center">
+						<input type="text" value="" id="_00">
+						<input type="text" value="" id="_01">
+						<input type="text" value="" id="_02">
+						<input type="text" value="" id="_03">
+						<input type="text" value="" id="_04">
+						<input type="text" value="" id="_05">
+						<input type="text" value=" " id="_06">
+						<input type="text" value="" id="_07">
+						<input type="text" value="" id="_08">
+						<input type="text" value=" " id="_09">
+						<input type="text" value="" id="_010">
+						<input type="text" value="" id="_011">
+						<input type="text" value="" id="_012">
+						<input type="text" value="" id="_013">
+						<input type="text" value="" id="_014">
+						<input type="text" value="" id="_015">
+						<input type="text" value="" id="_016">
+						<input type="text" value="" id="_017">
+						<input type="text" value="" id="_018">
+						<input type="text" value="" id="_019">
+						<input type="text" value="" id="_020">
+						<input type="text" value="" id="_021">
+						<input type="text" value="" id="_022">
+						<input type="text" value="" id="_023">
+						<input type="text" value="" id="_024">
+					</form>
+						<br>
+Shift:
+					<form id="numberedKey" align="center">
+						
+						<input type="text" value="" id="_0">
+						<input type="text" value="" id="_1">
+						<input type="text" value="" id="_2">
+						<input type="text" value="" id="_3">
+						<input type="text" value="" id="_4">
+						<input type="text" value="" id="_5">
+						<input type="text" value="" id="_6">
+						<input type="text" value="" id="_7">
+						<input type="text" value="" id="_8">
+						<input type="text" value="" id="_9">
+						<input type="text" value="" id="_10">
+						<input type="text" value="" id="_11">
+						<input type="text" value="" id="_12">
+						<input type="text" value="" id="_13">
+						<input type="text" value="" id="_14">
+						<input type="text" value="" id="_15">
+						<input type="text" value="" id="_16">
+						<input type="text" value="" id="_17">
+						<input type="text" value="" id="_18">
+						<input type="text" value="" id="_19">
+						<input type="text" value="" id="_20">
+						<input type="text" value="" id="_21">
+						<input type="text" value="" id="_22">
+						<input type="text" value="" id="_23">
+						<input type="text" value="" id="_24">
+</form>
+<br>
+							Substitution
+
+					<form id="substitution" action="https://web.archive.org/web/20200214114413/http://www.brianveitch.com/maze-runner/vigenere/index.html" align="center">
+						
+						<input type="text" value="" id="_A">
+						<input type="text" value="" id="_B">
+						<input type="text" value="" id="_C">
+						<input type="text" value="" id="_D">
+						<input type="text" value="" id="_E">
+						<input type="text" value="" id="_F">
+						<input type="text" value="" id="_G">
+						<input type="text" value="" id="_H">
+						<input type="text" value="" id="_I">
+						<input type="text" value="" id="_J">
+						<input type="text" value="" id="_K">
+						<input type="text" value="" id="_L">
+						<input type="text" value="" id="_M">
+						<input type="text" value="" id="_N">
+						<input type="text" value="" id="_Z">
+						<input type="text" value="" id="_Z">
+						<input type="text" value="" id="_O">
+						<input type="text" value="" id="_P">
+						<input type="text" value="" id="_Q">
+						<input type="text" value="" id="_R">
+						<input type="text" value="" id="_S">
+						<input type="text" value="" id="_T">
+						<input type="text" value="" id="_U">
+						<input type="text" value="" id="_W">
+						<input type="text" value="" id="_X">
+						
+						
+						<br>
+						<br>
+
+</form>
+
+<form name="key">
+				Keyword: <input type="text" name="keyword" id="keywordPractice">  
+				
+			</form>
+			<br>
+				<input type="button" onclick="keyword();" value="Submit Keyword" name="keyword">
+				
+				<br><br>
+<hr>
+			
+
+			
+			
+		
+			<div id="left">
+				
+				<h3>Encrypt your message: </h3>
+					<form class="section" id="message">
+
+						Keyword: <input type="text" name="keyword" id="keyword">  <br>
+
+						Message: <br>
+
+						<textarea id="plaintext"></textarea>
+					</form>
+				
+							
+					<input type="button" onclick="substitute();" name="substitute" value="Substitute"><br>
+						
+<br>
+				<form class="section" id="ciphertext">
+					Ciphertext: <br>
+				<textarea id="cipher"></textarea>
+
+			</form>
+				
+
+			</div>
+
+
+			
+		<div id="right">
+						
+						<h3>Decrypt your message:</h3>
+						You can test multiple keywords.<br>
+						Ex. Password food caesar <br><br>
+						<form class="section" id="message">
+							Keyword: <input type="text" name="key" id="key">  <br>
+
+							Encrypted Message: <br>
+							<textarea id="encrypted"></textarea>
+						</form>
+						
+									
+						<input type="button" onclick="decrypt();" name="decrypt" value="Decrypt"><br>
+						
+							<br>
+						<form class="section" id="ciphertext">
+
+							Decrypted Message: <br>
+						<textarea id="decrypted"></textarea>
+
+					</form>
+				
+
+			</div>
+
+
+
+
+</div>
+</div>
+	
+	
+<script type="text/javascript">
+
+var shifts = 0;
+
+function keyword () {
+
+
+  var oldArray = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+  
+  var myArray = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+ 	
+  var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  var i = myArray.length;
+
+
+var keyword = document.getElementById('keywordPractice').value.toUpperCase();
+var length = keyword.length;
+
+
+//alert(keyword);
+
+k=0;
+for(var i = 0; i < 22; i++){
+
+	
+	var j = keyword.charAt(i%length);
+	//console.log(j);
+	if(i == 6 || i == 9 || i == 14){
+		k--;
+	}
+	else {
+		document.getElementById('_0'+i).value = keyword.charAt(k%length);
+		document.getElementById('_'+i).value = keyword.charAt(k%length).charCodeAt(0)-65;
+		
+		 example = "_"+ String.fromCharCode(i+97);
+		 
+		 plaintextNumber = document.getElementById(example).value;
+		 plaintextNumber = plaintextNumber.charCodeAt(0) - 65;
+		 shift = keyword.charAt(k%length).charCodeAt(0)-65;
+
+		 cipherNumber = plaintextNumber + shift;
+		 console.log(cipherNumber);
+
+		 if(cipherNumber > 25){
+		 	cipherNumber = cipherNumber - 26;
+		 }
+
+		 document.getElementById('_'+String.fromCharCode(i+65)).value = String.fromCharCode(cipherNumber+65);
+
+	}
+
+	k++;
+
+}
+
+
+
+var left_over = 26-keyword.length;
+
+ // for(j = start; j < (start+left_over) ; j++){
+ // 	if(j < 26){
+	// 	myArray[j] = alphabet.charAt(0);
+	// 	alphabet = alphabet.replace(myArray[j], '');
+	// }
+	// else{
+	// 	myArray[j-26] = alphabet.charAt(0);
+	// 	alphabet = alphabet.replace(myArray[j-26], '');
+	// }
+
+ 
+
+ // }
+
+
+
+
+   // for (var i = myArray.length - 1; i >= 0; i--) {
+   	
+
+
+   // 		document.getElementById('_'+oldArray[i]).value = myArray[i];
+   		
+
+   // };
+
+}	
+
+
+function substitute(){
+
+
+
+	var plaintext = document.getElementById('plaintext').value.toUpperCase();
+
+	var keyword = document.getElementById('keyword').value.toUpperCase();
+
+	var shift_key = new Array();
+	var character = '';
+	var ciphertext = '';
+
+	for(var j = 0; j<keyword.length; j++){
+		shift_key[j] =  keyword.charCodeAt(j)-65;
+	}
+
+
+	if(plaintext == ''){
+		return false;
+	}
+	else{
+
+		var key_location = 0;
+
+		for(var j=0; j<plaintext.length; j++){
+
+			if( (plaintext.charCodeAt(j) < 65) || (plaintext.charCodeAt(j) > 90) ){
+				ciphertext += plaintext.charAt(j);
+			}
+
+			else{
+
+				key_location = (key_location % keyword.length);
+
+				character = plaintext.charCodeAt(j) - 65 + shift_key[key_location];
+
+					if(character > 25){
+						character = character - 26;
+					}
+
+					
+				ciphertext += String.fromCharCode(character+65);
+
+				key_location++;
+
+			}
+
+		}
+
+	}
+
+	document.getElementById('cipher').value = ciphertext;
+}
+
+function decrypt(){
+
+
+	var ciphertext = document.getElementById('encrypted').value.toUpperCase();
+
+	var keywords = document.getElementById('key').value.toUpperCase();
+
+	keywords = keywords.split(" ");
+	
+
+	var multiplePlaintext = '';
+
+	for(var k = 0; k<keywords.length; k++){
+
+		var keyword = keywords[k];
+	
+
+	console.log(keyword[k]);
+
+	var shift_key = new Array();
+	var character = '';
+	var plaintext = '';
+
+	for(var j = 0; j<keyword.length; j++){
+		shift_key[j] =  keyword.charCodeAt(j)-65;
+	}
+
+
+	if(ciphertext == ''){
+		return false;
+	}
+	else{
+
+		var key_location = 0;
+
+		for(var j=0; j<ciphertext.length; j++){
+
+			if( (ciphertext.charCodeAt(j) <65 ) || (ciphertext.charCodeAt(j) > 90) ){
+				plaintext += ciphertext.charAt(j);
+			}
+
+			else{
+
+				key_location = (key_location % keyword.length);
+
+				character = ciphertext.charCodeAt(j) - 65 - shift_key[key_location];
+
+					if(character < 0){
+						character = character + 26;
+					}
+
+					
+				plaintext += String.fromCharCode(character+65);
+
+				key_location++;
+
+			}
+
+		}
+
+	}
+	multiplePlaintext += plaintext+' - '+keywords[k]+'<br/><br/>';
+}
+
+	if(keywords.length == 1){
+		document.getElementById('decrypted').value = plaintext;
+	}
+	else {
+		Alert.render('Possible Plaintext<br/><br/>'+multiplePlaintext);
+	}
+
+}
+
+</script>
+
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+	$('.fancybox-media').fancybox({
+		openEffect  : 'none',
+		closeEffect : 'none',
+		helpers : {
+			media : {}
+		}
+	});
+});
+</script> -->
+
+
+
+</body></html>
